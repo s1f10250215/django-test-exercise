@@ -135,3 +135,14 @@ class TodoViewTestCase(TestCase):
         task.refresh_from_db()
         self.assertEqual(task.title, 'updated task')
         self.assertEqual(task.due_at, timezone.make_aware(datetime(2024, 8, 1, 12, 0, 0)))
+
+    def test_close_post(self):
+        task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)))
+        task.save()
+        client = Client()
+        response = client.post('/{}/close'.format(task.pk))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/')
+        task.refresh_from_db()
+        self.assertTrue(task.completed)
