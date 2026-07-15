@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 0 1rem;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+    color: #e5e7eb;
+}
+
+h1, h2 {
+    color: #f9fafb;
+}
+
+form {
+    background-color: #1f2937;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+input, button {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #4b5563;
+    border-radius: 4px;
+    background-color: #374151;
+    color: #f9fafb;
+}
+
+button {
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4f46e5;
+}
+
+.text, .task-card {
+    background-color: #1f2937;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+a {
+    color: #93c5fd;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
