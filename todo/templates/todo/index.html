@@ -10,8 +10,38 @@
 </head>
 
 <body>
+<div>
+{% if current_language == 'ja' %}
+<a href="{% url 'switch_language' 'en' %}?next={{ request.get_full_path|urlencode }}">English</a>
+{% else %}
+<a href="{% url 'switch_language' 'ja' %}?next={{ request.get_full_path|urlencode }}">日本語</a>
+{% endif %}
+</div>
+{% if current_language == 'ja' %}
+<h1>To Do アプリケーション</h1>
+<p>以下のフォームからタスクを送信できます。</p>
+<form action="{% url 'index' %}" method="post">
+{% csrf_token %}
+<div>
+<label for="titleInput">タイトル</label><br>
+<input id="titleInput" name="title" type="text" placeholder="タイトルを入力">
+</div>
+<div>
+<label for="dueInput">期限 :</label><br>
+<input id="dueInput" name="due_at" type="datetime-local">
+</div>
+<div>
+<button type="submit">送信</button>
+</div>
+</form>
+<br>
+<div>
+<a href="{% url 'index' %}?order=due">期限順で並び替え</a> |
+<a href="{% url 'index' %}?order=post">投稿日時順で並び替え</a>
+</div>
+{% else %}
 <h1>Sample To Do Application</h1>
-<p>You can submit tasks from the following form .</p>
+<p>You can submit tasks from the following form.</p>
 <form action="{% url 'index' %}" method="post">
 {% csrf_token %}
 <div>
@@ -31,11 +61,23 @@
 <a href="{% url 'index' %}?order=due">Sort by Due Date</a> |
 <a href="{% url 'index' %}?order=post">Sort by Posted Date</a>
 </div>
+{% endif %}
 
 {% for task in tasks %}
 <div class="text">
 <h2><a href="{% url 'detail' task.id %}">{{ task.title }}</a></h2>
 <ul>
+{% if current_language == 'ja' %}
+<li>投稿日時: {{ task.posted_at }}</li>
+{% if task.due_at %}
+<li>期限: {{ task.due_at }}</li>
+{% endif %}
+{% if task.completed %}
+<li>状態: 完了</li>
+{% else %}
+<li>状態: 未完了</li>
+{% endif %}
+{% else %}
 <li>Posted at: {{ task.posted_at }}</li>
 {% if task.due_at %}
 <li>Due at: {{ task.due_at }}</li>
@@ -44,6 +86,7 @@
 <li>Status: Completed</li>
 {% else %}
 <li>Status: Not Completed</li>
+{% endif %}
 {% endif %}
 </ul>
 </div>

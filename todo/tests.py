@@ -4,6 +4,34 @@ from datetime import datetime
 from todo.models import Task
 
 
+class LanguageSwitchTestCase(TestCase):
+    def test_switch_to_japanese(self):
+        client = Client()
+
+        response = client.get('/lang/ja/?next=/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+        self.assertEqual(client.session['django_language'], 'ja')
+
+        response = client.get('/')
+        self.assertContains(response, 'To Do アプリケーション')
+        self.assertContains(response, 'English')
+
+    def test_switch_to_english(self):
+        client = Client()
+
+        response = client.get('/lang/en/?next=/')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+        self.assertEqual(client.session['django_language'], 'en')
+
+        response = client.get('/')
+        self.assertContains(response, 'Sample To Do Application')
+        self.assertContains(response, '日本語')
+
+
 # Create your tests here.
 class SampleTestCase(TestCase):
     def test_sample1(self):

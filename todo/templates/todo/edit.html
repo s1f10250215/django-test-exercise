@@ -10,6 +10,32 @@
   </head>
 
   <body>
+    <div>
+      {% if current_language == 'ja' %}
+      <a href="{% url 'switch_language' 'en' %}?next={{ request.get_full_path|urlencode }}">English</a>
+      {% else %}
+      <a href="{% url 'switch_language' 'ja' %}?next={{ request.get_full_path|urlencode }}">日本語</a>
+      {% endif %}
+    </div>
+    {% if current_language == 'ja' %}
+    <h1>タスクを編集</h1>
+    <p>以下のフォームからタスクを編集できます。</p>
+    <form action="{% url 'update' task.id%}" method="post">
+      {% csrf_token %}
+      <div>
+        <label for="titleInput">タイトル</label><br>
+        <input id="titleInput" name="title" type="text" placeholder="タイトルを入力" value="{{ task.title }}">
+      </div>
+      <div>
+        <label for="dueInput">期限:</label><br>
+        <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:'Y-m-d H:i' }}">
+      </div>
+      <div>
+        <button type="submit">送信</button>
+      </div>
+    </form>
+    <br>
+    {% else %}
     <h1>Edit task</h1>
     <p>You can edit tasks from the following form.</p>
     <form action="{% url 'update' task.id%}" method="post">
@@ -20,13 +46,14 @@
       </div>
       <div>
         <label for="dueInput">Due at:</label><br>
-        <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:"Y-m-d H:i" }}">
+        <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:'Y-m-d H:i' }}">
       </div>
       <div>
         <button type="submit">Submit</button>
       </div>
     </form>
     <br>
+    {% endif %}
   </body>
 
 </html>
