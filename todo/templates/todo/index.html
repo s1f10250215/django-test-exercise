@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-
+    
 <head>
 <title>To Do Application</title>
 <meta charset="UTF-8">
@@ -31,6 +31,14 @@
 <input id="dueInput" name="due_at" type="datetime-local">
 </div>
 <div>
+<label for="priorityInput">優先度:</label><br>
+<select id="priorityInput" name="priority">
+  <option value="high">高</option>
+  <option value="medium" selected>中</option>
+  <option value="low">低</option>
+</select>
+</div>
+<div>
 <button type="submit">送信</button>
 </div>
 </form>
@@ -53,6 +61,14 @@
 <input id="dueInput" name="due_at" type="datetime-local">
 </div>
 <div>
+<label for="priorityInput">Priority :</label><br>
+<select id="priorityInput" name="priority">
+  <option value="high">High</option>
+  <option value="medium" selected>Medium</option>
+  <option value="low">Low</option>
+</select>
+</div>
+<div>
 <button type="submit">Submit</button>
 </div>
 </form>
@@ -72,6 +88,13 @@
 {% if task.due_at %}
 <li>期限: {{ task.due_at }}</li>
 {% endif %}
+{% if task.priority == 'high' %}
+<li>優先度: 高</li>
+{% elif task.priority == 'medium' %}
+<li>優先度: 中</li>
+{% elif task.priority == 'low' %}
+<li>優先度: 低</li>
+{% endif %}
 {% if task.completed %}
 <li>状態: 完了</li>
 {% else %}
@@ -81,6 +104,13 @@
 <li>Posted at: {{ task.posted_at }}</li>
 {% if task.due_at %}
 <li>Due at: {{ task.due_at }}</li>
+{% endif %}
+{% if task.priority == 'high' %}
+<li>Priority: High</li>
+{% elif task.priority == 'medium' %}
+<li>Priority: Medium</li>
+{% elif task.priority == 'low' %}
+<li>Priority: Low</li>
 {% endif %}
 {% if task.completed %}
 <li>Status: Completed</li>

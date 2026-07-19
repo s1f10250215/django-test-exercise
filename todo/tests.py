@@ -93,7 +93,7 @@ class TodoViewTestCase(TestCase):
 
     def test_index_post(self):
         client = Client()
-        data = {'title': 'Test Task', 'due_at': '2024-06-30 23:59:59'}
+        data = {'title': 'Test Task', 'due_at': '2024-06-30 23:59:59', 'priority': 'medium'}
         response = client.post('/', data)
 
         self.assertEqual(response.status_code, 200)
@@ -170,13 +170,14 @@ class TodoViewTestCase(TestCase):
         task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)))
         task.save()
         client = Client()
-        data = {'title': 'updated task', 'due_at': '2024-08-01 12:00:00'}
+        data = {'title': 'updated task', 'due_at': '2024-08-01 12:00:00', 'priority': 'high'}
         response = client.post('/{}/update'.format(task.pk), data)
 
         self.assertEqual(response.status_code, 302)
         task.refresh_from_db()
         self.assertEqual(task.title, 'updated task')
         self.assertEqual(task.due_at, timezone.make_aware(datetime(2024, 8, 1, 12, 0, 0)))
+        self.assertEqual(task.priority, 'high')
 
     def test_close_post(self):
         task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)))

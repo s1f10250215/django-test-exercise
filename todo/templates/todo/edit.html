@@ -31,6 +31,14 @@
         <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:'Y-m-d H:i' }}">
       </div>
       <div>
+        <label for="priorityInput">優先度:</label><br>
+        <select id="priorityInput" name="priority">
+          <option value="high" {% if task.priority == 'high' %}selected{% endif %}>高</option>
+          <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>中</option>
+          <option value="low" {% if task.priority == 'low' %}selected{% endif %}>低</option>
+        </select>
+      </div>
+      <div>
         <button type="submit">送信</button>
       </div>
     </form>
@@ -47,6 +55,14 @@
       <div>
         <label for="dueInput">Due at:</label><br>
         <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:'Y-m-d H:i' }}">
+      </div>
+      <div>
+        <label for="priorityInput">Priority:</label><br>
+        <select id="priorityInput" name="priority">
+          <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
+          <option value="medium" {% if task.priority == 'medium' %}selected{% endif %}>Medium</option>
+          <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
+        </select>
       </div>
       <div>
         <button type="submit">Submit</button>
