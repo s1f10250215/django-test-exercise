@@ -24,3 +24,12 @@ class Task(models.Model):
         if self.due_at is None:
             return False
         return self.due_at < dt
+
+    def remaining_days(self, current_time=None):
+        if self.due_at is None:
+            return None
+        if current_time is None:
+            current_time = timezone.now()
+        due_date = timezone.localtime(self.due_at).date()
+        current_date = timezone.localtime(current_time).date()
+        return (due_date - current_date).days

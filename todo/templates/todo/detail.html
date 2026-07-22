@@ -23,6 +23,7 @@
       <li>投稿日時: {{ task.posted_at }}</li>
       {% if task.due_at %}
       <li>期限: {{ task.due_at }}</li>
+      <li>期限まであと: {{ task.remaining_days }}日</li>
       {% endif %}
       {% if task.priority == 'high' %}
       <li>優先度: 高</li>
@@ -40,6 +41,7 @@
       <li>Posted at: {{ task.posted_at }}</li>
       {% if task.due_at %}
       <li>Due at: {{ task.due_at }}</li>
+      <li>{{ task.remaining_days }} day(s) remaining</li>
       {% endif %}
       {% if task.priority == 'high' %}
       <li>Priority: High</li>
