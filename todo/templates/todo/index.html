@@ -28,8 +28,11 @@
 </form>
 <br>
 <div>
-<a href="{% url 'index' %}?order=due">Sort by Due Date</a> |
-<a href="{% url 'index' %}?order=post">Sort by Posted Date</a>
+<a href="{% url 'index' %}?order=due{% if request.GET.refine %}&refine={{ request.GET.refine }}{% endif %}">Sort by Due Date</a> |
+<a href="{% url 'index' %}?order=post{% if request.GET.refine %}&refine={{ request.GET.refine }}{% endif %}">Sort by Posted Date</a> |
+<a href="{% url 'index' %}?refine=completed{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">Completed tasks</a> |
+<a href="{% url 'index' %}?refine=not_completed{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">Not completed tasks</a> | 
+<a href="{% url 'index' %}?refine=all{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">All tasks</a>
 </div>
 
 {% for task in tasks %}

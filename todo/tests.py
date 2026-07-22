@@ -98,6 +98,32 @@ class TodoViewTestCase(TestCase):
         self.assertEqual(response.context['tasks'][0], task1)
         self.assertEqual(response.context['tasks'][1], task2)
 
+    def test_index_get_refine_completed(self):
+        task1 = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)), completed=True)
+        task1.save()
+        task2 = Task(title='task2', due_at=timezone.make_aware(datetime(2024, 8, 1)), completed=False)
+        task2.save()
+        client = Client()
+        response = client.get('/?refine=completed')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.templates[0].name, 'todo/index.html')
+        self.assertEqual(len(response.context['tasks']), 1)
+        self.assertEqual(response.context['tasks'][0], task1)
+
+    def test_index_get_refine_not_completed(self):
+        task1 = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)), completed=True)
+        task1.save()
+        task2 = Task(title='task2', due_at=timezone.make_aware(datetime(2024, 8, 1)), completed=False)
+        task2.save()
+        client = Client()
+        response = client.get('/?refine=not_completed')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.templates[0].name, 'todo/index.html')
+        self.assertEqual(len(response.context['tasks']), 1)
+        self.assertEqual(response.context['tasks'][0], task2)
+
     def test_detail_get_success(self):
         task = Task(title='task1', due_at=timezone.make_aware(datetime(2024, 7, 1)))
         task.save()
